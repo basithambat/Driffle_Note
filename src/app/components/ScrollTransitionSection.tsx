@@ -84,8 +84,7 @@ export function ScrollTransitionSection() {
         },
       });
 
-      // 0–10 %: fade out window controls + recording pill
-      tl.to(controlsRef.current, { opacity: 0, duration: 0.1, ease: "none" }, 0);
+      // 0–10 %: fade out recording pill (controls stay visible)
       tl.to(recordingPillRef.current, { opacity: 0, y: 10, duration: 0.1, ease: "none" }, 0);
 
       // 10–30 %: label roll + title roll
@@ -106,6 +105,13 @@ export function ScrollTransitionSection() {
 
       // 30–50 %: plain notes fade out
       tl.to(oldTextRef.current, { opacity: 0, y: -14, duration: 0.2, ease: "none" }, 0.3);
+
+      // 40–50 %: section background warms up for scene 2
+      tl.to(
+        sectionRef.current,
+        { backgroundColor: "#faf5f2", duration: 0.1, ease: "power1.inOut" },
+        0.4,
+      );
 
       // 50–80 %: structured notes reveal with staggered highlights
       if (bulletSections) {
@@ -139,7 +145,7 @@ export function ScrollTransitionSection() {
     >
       <div
         aria-hidden="true"
-        className="absolute border border-[#d5d3d2] border-solid inset-0 pointer-events-none rounded-2xl"
+        className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl"
       />
 
       {/* Labels container with overflow hidden for rolling effect */}
@@ -202,50 +208,21 @@ export function ScrollTransitionSection() {
                 ref={controlsRef}
                 className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center justify-end pr-2 py-[13.375px] relative size-full"
               >
-                <div className="content-stretch flex gap-2 h-2.5 items-center justify-end relative shrink-0 w-[58px]">
-                  <div className="content-stretch flex items-center justify-center relative shrink-0 size-4">
-                    <div className="relative shrink-0 size-4">
-                      <svg
-                        className="absolute block size-full"
-                        fill="none"
-                        preserveAspectRatio="none"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M8 3V13M3 8H13"
-                          stroke="black"
-                          strokeOpacity="0.6"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </div>
+                <div className="content-stretch flex gap-2 items-center justify-end relative shrink-0">
+                  <div className="relative shrink-0 size-4">
+                    <svg className="block size-full" fill="none" viewBox="0 0 16 16">
+                      <path d="M3 8H13" stroke="black" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
                   </div>
-                  <div className="content-stretch flex h-4 items-center justify-center relative shrink-0 w-2.5">
-                    <div className="h-[9px] relative rounded-sm shrink-0 w-2.5">
-                      <div
-                        aria-hidden="true"
-                        className="absolute border border-[rgba(0,0,0,0.6)] border-solid inset-0 pointer-events-none rounded-sm"
-                      />
-                    </div>
+                  <div className="relative shrink-0 size-4">
+                    <svg className="block size-full" fill="none" viewBox="0 0 16 16">
+                      <rect x="3.5" y="3.5" width="9" height="9" rx="1.5" stroke="black" strokeOpacity="0.6" strokeWidth="1.5" />
+                    </svg>
                   </div>
-                  <div className="content-stretch flex items-center justify-center relative shrink-0 size-4">
-                    <div className="relative shrink-0 size-4">
-                      <svg
-                        className="absolute block size-full"
-                        fill="none"
-                        preserveAspectRatio="none"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M4 4L12 12M12 4L4 12"
-                          stroke="black"
-                          strokeOpacity="0.6"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </div>
+                  <div className="relative shrink-0 size-4">
+                    <svg className="block size-full" fill="none" viewBox="0 0 16 16">
+                      <path d="M4 4L12 12M12 4L4 12" stroke="black" strokeOpacity="0.6" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -253,7 +230,7 @@ export function ScrollTransitionSection() {
           </div>
 
           {/* Content area */}
-          <div className="bg-white min-h-[300px] sm:h-[428px] relative shrink-0 w-full overflow-hidden">
+          <div className="bg-white min-h-[300px] sm:h-[428px] relative shrink-0 w-full overflow-hidden rounded-b-[15px]">
             <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-start px-6 sm:px-8 py-4 relative size-full">
               {/* Title with roll transition */}
               <div className="relative h-7 overflow-hidden w-full mb-4">

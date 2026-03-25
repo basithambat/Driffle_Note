@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import svgPaths from "../../imports/svg-st5x77eynv";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HeroInteractiveImage } from "./HeroInteractiveImage";
 import { NoiseOverlay } from "./NoiseOverlay";
 import { ScrollTransitionSection } from "./ScrollTransitionSection";
@@ -57,7 +57,7 @@ function BackgroundImage5({ children }: React.PropsWithChildren<{}>) {
 function BackgroundImage4({ children }: React.PropsWithChildren<{}>) {
   return (
     <div className="bg-white relative rounded-2xl shrink-0 w-full">
-      <div aria-hidden="true" className="absolute border border-[#d5d3d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+      <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
       <div className="flex flex-col lg:flex-row items-center justify-center size-full">
         <div className="content-stretch flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-center justify-center px-6 sm:px-12 md:px-16 lg:px-20 xl:px-28 py-16 sm:py-20 md:py-[124px] relative w-full max-w-7xl mx-auto">{children}</div>
       </div>
@@ -68,15 +68,47 @@ function BackgroundImage4({ children }: React.PropsWithChildren<{}>) {
 type BackgroundImage3Props = {
   additionalClassNames?: string;
   withNoiseOverlay?: boolean;
+  withCursorGlow?: boolean;
+  borderClassName?: string;
 };
 
-function BackgroundImage3({ children, additionalClassNames = "", withNoiseOverlay = false }: React.PropsWithChildren<BackgroundImage3Props>) {
+function BackgroundImage3({ children, additionalClassNames = "", withNoiseOverlay = false, withCursorGlow = false, borderClassName }: React.PropsWithChildren<BackgroundImage3Props>) {
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = withCursorGlow
+    ? (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!glowRef.current) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        glowRef.current.style.background =
+          `radial-gradient(600px circle at ${x}px ${y}px, rgba(255,157,0,0.07), transparent 70%)`;
+        glowRef.current.style.opacity = "1";
+      }
+    : undefined;
+
+  const handleMouseLeave = withCursorGlow
+    ? () => {
+        if (glowRef.current) glowRef.current.style.opacity = "0";
+      }
+    : undefined;
+
   return (
-    <div className={clsx("relative rounded-2xl shrink-0 w-full", additionalClassNames)}>
-      <div aria-hidden="true" className="absolute border border-[#d5d3d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+    <div
+      className={clsx("relative rounded-2xl shrink-0 w-full", additionalClassNames)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div aria-hidden="true" className={clsx("absolute border border-solid inset-0 pointer-events-none rounded-2xl", borderClassName || "border-[#d5d5d2]")} />
+      {withCursorGlow && (
+        <div
+          ref={glowRef}
+          className="absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 pointer-events-none z-[5]"
+        />
+      )}
       <div className="flex flex-col items-center size-full">
         <div className="content-stretch flex flex-col gap-16 md:gap-[104px] items-center px-6 sm:px-12 md:px-20 py-16 sm:py-20 md:py-[124px] relative w-full">
-          {withNoiseOverlay && <NoiseOverlay opacity={0.4} scale={0.25} fps={30} />}
+          {withNoiseOverlay && <NoiseOverlay opacity={0.15} />}
           {children}
         </div>
       </div>
@@ -245,69 +277,119 @@ function SvgBackgroundImage() {
   );
 }
 
+function NavBar() {
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const lastY = useRef(0);
+
+  useEffect(() => {
+    const THRESHOLD = 10;
+    const handleScroll = () => {
+      const y = window.scrollY;
+      if (y > lastY.current + THRESHOLD) setHidden(true);
+      else if (y < lastY.current - THRESHOLD) setHidden(false);
+      setScrolled(y > 100);
+      lastY.current = y;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={clsx(
+        "fixed top-4 sm:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300",
+        hidden && "-translate-y-[calc(100%+3rem)]"
+      )}
+    >
+      <div className={clsx(
+        "backdrop-blur-xl flex flex-row gap-4 sm:gap-8 md:gap-[61px] items-center justify-center px-4 sm:px-6 md:px-[25px] py-2 rounded-full relative transition-[background-color,box-shadow] duration-300",
+        scrolled
+          ? "bg-white/80 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
+          : "bg-[rgba(0,0,0,0.1)]"
+      )}>
+        <div aria-hidden="true" className={clsx(
+          "absolute border border-solid inset-0 pointer-events-none rounded-full transition-colors duration-300",
+          scrolled ? "border-[#d5d5d2]" : "border-white/30"
+        )} />
+
+        {/* Logo */}
+        <div className="content-stretch flex gap-1 items-center relative shrink-0 cursor-pointer">
+          <div className="h-6 relative shrink-0 w-[19.078px]">
+            <div className="absolute inset-[-0.62%_0_0_-0.92%]">
+              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 19.2536 23.144">
+                <g id="Frame 14">
+                  <path d={svgPaths.p3ec0b400} fill="var(--fill-0, black)" id="Vector 4" opacity="0.3" />
+                  <path d={svgPaths.p66ea880} fill="var(--fill-0, black)" id="Vector 2" opacity="0.3" />
+                  <path d={svgPaths.p3bc29f80} fill="var(--fill-0, black)" id="Subtract" opacity="0.3" />
+                  <path d={svgPaths.p24e82500} fill="var(--fill-0, black)" id="Vector 5" opacity="0.3" />
+                  <path d={svgPaths.p7da2800} fill="var(--fill-0, #EAEAEA)" id="Subtract_2" stroke="var(--stroke-0, #003428)" strokeWidth="0.285968" />
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div className={clsx(
+            "flex flex-col font-title font-medium justify-center leading-[0] not-italic relative shrink-0 text-xl sm:text-2xl md:text-[25px] whitespace-nowrap transition-colors duration-300",
+            scrolled ? "text-[#0e0f0c]" : "text-white"
+          )}>
+            <p className="leading-[normal]">Driffle</p>
+          </div>
+        </div>
+
+        {/* Nav Links */}
+        <div className={clsx(
+          "hidden sm:flex font-['Geist:Medium',sans-serif] gap-4 md:gap-[26px] items-center leading-[0] not-italic relative shrink-0 text-sm md:text-[15.1px] whitespace-nowrap transition-colors duration-300",
+          scrolled ? "text-[#0e0f0c]" : "text-white"
+        )}>
+          <div className="flex flex-col justify-center relative shrink-0 cursor-pointer hover:opacity-60 transition-opacity">
+            <p className="leading-6">Features</p>
+          </div>
+          <div className="flex flex-col justify-center relative shrink-0 cursor-pointer hover:opacity-60 transition-opacity">
+            <p className="leading-6">Pricing</p>
+          </div>
+          <div className="flex flex-col justify-center relative shrink-0 cursor-pointer hover:opacity-60 transition-opacity">
+            <p className="leading-6">Blog</p>
+          </div>
+        </div>
+
+        {/* Download Button */}
+        <div className={clsx(
+          "content-stretch flex items-center px-3 sm:px-[13px] py-1.5 sm:py-[7px] relative rounded-full shrink-0 cursor-pointer transition-colors duration-200",
+          scrolled ? "hover:bg-black/5" : "hover:bg-white/10"
+        )} data-name="Link">
+          <div aria-hidden="true" className={clsx(
+            "absolute border border-solid inset-0 pointer-events-none rounded-full transition-colors duration-300",
+            scrolled ? "border-[#d5d5d2]" : "border-[rgba(255,255,255,0.2)]"
+          )} />
+          <div className="relative shrink-0" data-name="Container">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center relative">
+              <div className={clsx(
+                "flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-sm sm:text-[15.3px] whitespace-nowrap transition-colors duration-300",
+                scrolled ? "text-[#0e0f0c]" : "text-white"
+              )}>
+                <p className="leading-6">Download</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
 export default function ResponsiveFrame() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="bg-white content-stretch flex flex-col gap-2 items-center p-4 relative size-full" ref={containerRef}>
+      <NoiseOverlay opacity={0.06} blendMode="soft-light" />
+      <NavBar />
       {/* Hero Section */}
       <div className="bg-white min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:h-[813px] relative rounded-2xl shrink-0 w-full">
         {/* inset-0 avoids height:100% collapsing when parent only has min-height */}
         <div className="absolute inset-0 overflow-clip rounded-[inherit]">
           {/* Background Image — subtle zoom + perspective tilt toward cursor on hover */}
           <HeroInteractiveImage alt="" src="/assets/hero-placeholder.png" />
-          
-          {/* Navigation */}
-          <div className="absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-full max-w-7xl px-4">
-            <div className="bg-[rgba(0,0,0,0.1)] backdrop-blur-sm content-stretch flex flex-col sm:flex-row gap-4 sm:gap-8 md:gap-[61px] items-center justify-center px-4 sm:px-6 md:px-[25px] py-2 rounded-full">
-              <div aria-hidden="true" className="absolute border border-solid border-white inset-0 pointer-events-none rounded-full" />
-              
-              {/* Logo */}
-              <div className="content-stretch flex gap-1 items-center relative shrink-0">
-                <div className="h-6 relative shrink-0 w-[19.078px]">
-                  <div className="absolute inset-[-0.62%_0_0_-0.92%]">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 19.2536 23.144">
-                      <g id="Frame 14">
-                        <path d={svgPaths.p3ec0b400} fill="var(--fill-0, black)" id="Vector 4" opacity="0.3" />
-                        <path d={svgPaths.p66ea880} fill="var(--fill-0, black)" id="Vector 2" opacity="0.3" />
-                        <path d={svgPaths.p3bc29f80} fill="var(--fill-0, black)" id="Subtract" opacity="0.3" />
-                        <path d={svgPaths.p24e82500} fill="var(--fill-0, black)" id="Vector 5" opacity="0.3" />
-                        <path d={svgPaths.p7da2800} fill="var(--fill-0, #EAEAEA)" id="Subtract_2" stroke="var(--stroke-0, #003428)" strokeWidth="0.285968" />
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-                <div className="flex flex-col font-title font-medium justify-center leading-[0] not-italic relative shrink-0 text-xl sm:text-2xl md:text-[25px] text-white whitespace-nowrap">
-                  <p className="leading-[normal]">Driffle</p>
-                </div>
-              </div>
-              
-              {/* Nav Links - hidden on mobile */}
-              <div className="hidden sm:flex content-stretch font-['Geist:Medium',sans-serif] gap-4 md:gap-[26px] items-center leading-[0] not-italic relative shrink-0 text-white text-sm md:text-[15.1px] whitespace-nowrap">
-                <div className="flex flex-col justify-center relative shrink-0">
-                  <p className="leading-6">Features</p>
-                </div>
-                <div className="flex flex-col justify-center relative shrink-0">
-                  <p className="leading-6">Pricing</p>
-                </div>
-                <div className="flex flex-col justify-center relative shrink-0">
-                  <p className="leading-6">Blog</p>
-                </div>
-              </div>
-              
-              {/* Download Button */}
-              <div className="content-stretch flex items-center px-3 sm:px-[13px] py-1.5 sm:py-[7px] relative rounded-full shrink-0" data-name="Link">
-                <div aria-hidden="true" className="absolute border border-[rgba(0,0,0,0.05)] border-solid inset-0 pointer-events-none rounded-full" />
-                <div className="relative shrink-0" data-name="Container">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center relative">
-                    <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-sm sm:text-[15.3px] text-white whitespace-nowrap">
-                      <p className="leading-6">Download</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           
           {/* Hero Content */}
           <div className="absolute left-1/2 -translate-x-1/2 top-24 sm:top-32 md:top-44 content-stretch flex flex-col gap-12 sm:gap-16 md:gap-[87px] items-center w-full max-w-[90%] sm:max-w-[80%] md:max-w-[653px] px-4">
@@ -323,7 +405,7 @@ export default function ResponsiveFrame() {
                 <p className="leading-relaxed sm:leading-[28.13px]">Driffle quietly listens to your meetings and turns your rough notes into clear, structured records — no bots, no interruptions, just you and your{"\u00A0"}calls.</p>
               </div>
             </div>
-            <div className="bg-[#ff9d00] content-stretch flex gap-1 h-12 sm:h-14 items-center justify-center overflow-clip px-5 sm:px-6 relative rounded-full shrink-0 w-full max-w-xs sm:max-w-[322px]" data-name="Link">
+            <div className="bg-[#ff9d00] content-stretch flex gap-1 h-12 sm:h-14 items-center justify-center overflow-clip px-5 sm:px-6 relative rounded-full shrink-0 w-full max-w-xs sm:max-w-[322px] cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all duration-200" data-name="Link">
               <div className="relative shrink-0 size-5 sm:size-6" data-name="apple">
                 <div className="absolute inset-[0_14.39%_12.5%_14.39%]" data-name="vector">
                   <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 17.0948 21">
@@ -337,7 +419,7 @@ export default function ResponsiveFrame() {
             </div>
           </div>
         </div>
-        <div aria-hidden="true" className="absolute border border-[#d5d3d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+        <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
       </div>
 
       {/* Section 2: Notes → AI Enhanced (pins at center, plays both scenes, then releases) */}
@@ -359,7 +441,7 @@ export default function ResponsiveFrame() {
         </div>
         <div className="relative shrink-0 w-full">
           <div className="flex flex-row justify-center size-full">
-            <div className="content-stretch flex flex-col md:flex-row gap-6 sm:gap-8 items-start justify-center px-4 sm:px-8 md:px-12 relative w-full">
+            <div className="content-stretch flex flex-col md:flex-row gap-6 sm:gap-8 items-start md:items-stretch justify-center px-4 sm:px-8 md:px-12 relative w-full">
               <div className="bg-[#faf5f2] relative rounded-2xl self-stretch shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
                 <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
                 <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 relative size-full">
@@ -509,7 +591,7 @@ export default function ResponsiveFrame() {
       </BackgroundImage4>
 
       {/* Pricing section */}
-      <BackgroundImage3 additionalClassNames="bg-[#18190f]" withNoiseOverlay={true}>
+      <BackgroundImage3 additionalClassNames="bg-[#18190f]" withNoiseOverlay={true} withCursorGlow={true} borderClassName="border-white/[0.06]">
         <div className="relative shrink-0 w-full">
           <div className="flex flex-col items-center size-full">
             <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-center leading-[0] px-4 sm:px-8 md:px-16 relative w-full">
@@ -528,7 +610,7 @@ export default function ResponsiveFrame() {
             </div>
           </div>
         </div>
-        <div className="bg-[#ff9d00] content-stretch flex h-14 sm:h-16 items-center justify-center w-full max-w-xs sm:max-w-[319px] relative rounded-full shrink-0" data-name="Button">
+        <div className="bg-[#ff9d00] content-stretch flex h-14 sm:h-16 items-center justify-center w-full max-w-xs sm:max-w-[319px] relative rounded-full shrink-0 cursor-pointer hover:brightness-110 active:scale-[0.98] transition-all duration-200" data-name="Button">
           <div className="flex flex-col font-['Geist:Medium',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#18190f] text-sm sm:text-[14.5px] text-center uppercase whitespace-nowrap">
             <p className="leading-6">view pricing</p>
           </div>

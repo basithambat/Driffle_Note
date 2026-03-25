@@ -5,8 +5,8 @@ import { AppProviders } from "@/components/providers/app-providers";
 import "../styles/index.css";
 
 export const metadata: Metadata = {
-  title: "Linear-like App",
-  description: "Modern full-stack Next.js application",
+  title: "Driffle — Stop scribbling. Start remembering.",
+  description: "Driffle quietly listens to your meetings and turns your rough notes into clear, structured records — no bots, no interruptions.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

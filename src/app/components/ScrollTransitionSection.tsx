@@ -91,8 +91,8 @@ export function ScrollTransitionSection() {
       tl.to(oldLabelRef.current, { y: -20, opacity: 0, duration: 0.2, ease: "power1.inOut" }, 0.1);
       tl.fromTo(
         aiLabelRef.current,
-        { y: 16, opacity: 0.1 },
-        { y: 0, opacity: 1, duration: 0.2, ease: "power1.inOut" },
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.2, ease: "power1.inOut", immediateRender: false },
         0.1,
       );
       tl.to(titleOldRef.current, { y: -28, opacity: 0, duration: 0.2, ease: "power1.inOut" }, 0.1);
@@ -189,7 +189,7 @@ export function ScrollTransitionSection() {
             </svg>
           </div>
           <div className="flex flex-col font-title justify-center leading-[0] not-italic text-[#0e0f0c] text-lg whitespace-nowrap">
-            <p className="leading-7">AI enhanced</p>
+            <p className="leading-7">AI refined notes</p>
           </div>
         </div>
       </div>

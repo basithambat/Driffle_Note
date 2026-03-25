@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { HeroInteractiveImage } from "./HeroInteractiveImage";
 import { NoiseOverlay } from "./NoiseOverlay";
 import { ScrollTransitionSection } from "./ScrollTransitionSection";
+import { FeatureScrollSections } from "./FeatureScrollSections";
 
 function ListBackgroundImage({ children }: React.PropsWithChildren<{}>) {
   return (
@@ -517,78 +518,8 @@ export default function ResponsiveFrame() {
         </div>
       </BackgroundImage3>
 
-      {/* Feature sections */}
-      <BackgroundImage4>
-        <div className="content-stretch flex lg:flex-1 flex-col gap-6 sm:gap-8 items-start lg:items-center lg:justify-center min-h-px min-w-px relative lg:max-w-[50%]">
-          <div className="flex flex-col font-title italic justify-center leading-[0] relative shrink-0 text-[#da4c1e] text-lg sm:text-xl md:text-[22px] w-full">
-            <p className="leading-[normal]">Private by default</p>
-          </div>
-          <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[-0.72px] w-full">
-            <p className="leading-tight lg:leading-[48px]">No awkward bots. Just you.</p>
-          </div>
-          <div className="flex flex-col font-['Geist:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#72726e] text-base sm:text-lg md:text-xl lg:text-[22.3px] w-full">
-            <p className="leading-relaxed lg:leading-8">{`Driffle transcribes your computer's audio directly — meaning no robot joins your call, no notification goes out, and no one feels like they're being recorded by a third party. Your meeting stays yours.`}</p>
-          </div>
-          <BackgroundImageAndText2 text="Works with any meeting platform — nothing to install on theirs" />
-          <BackgroundImage1>{`No "Driffle is now recording" announcement to your guests`}</BackgroundImage1>
-          <BackgroundImageAndText2 text="Your data stays private and secure" />
-          <BackgroundImageAndText2 text="Supports Zoom, Meet, Teams, Webex, Slack, and more" />
-        </div>
-        <div className="bg-[#434626] h-auto min-h-[400px] sm:min-h-[500px] lg:min-h-[621px] aspect-square lg:flex-1 relative rounded-2xl shrink-0 w-full lg:max-w-[50%]" data-name="Background+Border">
-          <div className="content-stretch flex flex-col items-start justify-center overflow-clip p-6 sm:p-8 relative rounded-[inherit] size-full">
-            <div className="bg-[#faf5f2] flex-[1_0_0] min-h-px min-w-px rounded-xl w-full" />
-          </div>
-          <div aria-hidden="true" className="absolute border border-[#434626] border-solid inset-0 pointer-events-none rounded-2xl" />
-        </div>
-      </BackgroundImage4>
-
-      <BackgroundImage4>
-        <div className="bg-[#272819] h-auto min-h-[400px] sm:min-h-[500px] lg:min-h-[621px] aspect-square lg:flex-1 relative rounded-2xl shrink-0 w-full lg:max-w-[50%]">
-          <div className="content-stretch flex flex-col items-start justify-center overflow-clip p-6 sm:p-8 relative rounded-[inherit] size-full">
-            <div className="bg-[#faf5f2] flex-[1_0_0] min-h-px min-w-px rounded-xl w-full" />
-          </div>
-          <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
-        </div>
-        <div className="content-stretch flex lg:flex-1 flex-col gap-6 sm:gap-8 items-start lg:items-center lg:justify-center min-h-px min-w-px relative lg:max-w-[50%]">
-          <div className="flex flex-col font-title italic justify-center leading-[0] relative shrink-0 text-[#da4c1e] text-lg sm:text-xl md:text-[22px] w-full">
-            <p className="leading-[normal]">Your AI teammate</p>
-          </div>
-          <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[-0.72px] w-full">
-            <p className="leading-tight lg:leading-[48px]">Ask anything about your meetings</p>
-          </div>
-          <div className="flex flex-col font-['Geist:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#72726e] text-base sm:text-lg md:text-xl lg:text-[22.3px] w-full">
-            <p className="leading-relaxed lg:leading-8">{`After your call, chat with Driffle like you'd chat with a brilliant colleague who attended every meeting you ever had. Draft follow-ups, pull action items, identify budget signals — in seconds.`}</p>
-          </div>
-          <BackgroundImageAndText2 text="Draft follow-up emails with the right context, automatically" />
-          <BackgroundImageAndText2 text="Extract action items and owners in one click" />
-          <BackgroundImage1>{`Ask: "What did we agree on regarding pricing?"`}</BackgroundImage1>
-          <BackgroundImageAndText2 text="Search across all your past meetings at once" />
-        </div>
-      </BackgroundImage4>
-
-      <BackgroundImage4>
-        <div className="content-stretch flex lg:flex-1 flex-col gap-6 sm:gap-8 items-start lg:items-center lg:justify-center min-h-px min-w-px relative lg:max-w-[50%]">
-          <div className="flex flex-col font-title italic justify-center leading-[0] relative shrink-0 text-[#da4c1e] text-lg sm:text-xl md:text-[22px] w-full">
-            <p className="leading-[normal]">One click, everywhere</p>
-          </div>
-          <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[-0.72px] w-full">
-            <p className="leading-tight lg:leading-[48px]">Share notes where your team already works</p>
-          </div>
-          <div className="flex flex-col font-['Geist:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#72726e] text-base sm:text-lg md:text-xl lg:text-[22.3px] w-full">
-            <p className="leading-relaxed lg:leading-8">Send beautifully formatted meeting notes to Slack, email them to stakeholders, log them in your CRM, or drop them into Notion — right from inside Driffle. No copy-pasting, no reformatting.</p>
-          </div>
-          <BackgroundImageAndText2 text="One-click sharing to Slack, email, Notion, HubSpot, and more" />
-          <BackgroundImageAndText2 text="Custom templates for discovery calls, 1-on-1s, and standups" />
-          <BackgroundImageAndText2 text="Shareable links so your whole team can view notes" />
-          <BackgroundImageAndText2 text="Keeps your CRM updated without extra effort" />
-        </div>
-        <div className="bg-[#585b3d] h-auto min-h-[400px] sm:min-h-[500px] lg:min-h-[621px] aspect-square lg:flex-1 relative rounded-2xl shrink-0 w-full lg:max-w-[50%]">
-          <div className="content-stretch flex flex-col items-start justify-center overflow-clip p-6 sm:p-8 relative rounded-[inherit] size-full">
-            <div className="bg-[#faf5f2] flex-[1_0_0] min-h-px min-w-px rounded-xl w-full" />
-          </div>
-          <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
-        </div>
-      </BackgroundImage4>
+      {/* Feature sections — sticky image with scroll-driven content transitions */}
+      <FeatureScrollSections />
 
       {/* Pricing section */}
       <BackgroundImage3 additionalClassNames="bg-[#18190f]" withNoiseOverlay={true} withCursorGlow={true} borderClassName="border-white/[0.06]">

@@ -307,7 +307,7 @@ function NavBar() {
       )}
     >
       <div className={clsx(
-        "backdrop-blur-xl flex flex-row gap-3 sm:gap-8 md:gap-[61px] items-center justify-center px-4 sm:px-6 md:px-[25px] py-2 rounded-full relative transition-[background-color,box-shadow] duration-300",
+        "backdrop-blur-xl flex flex-row gap-5 sm:gap-8 md:gap-[61px] items-center justify-center px-5 sm:px-6 md:px-[25px] py-2.5 sm:py-2 rounded-full relative transition-[background-color,box-shadow] duration-300",
         barColor
           ? "bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
           : "bg-[rgba(0,0,0,0.1)]"

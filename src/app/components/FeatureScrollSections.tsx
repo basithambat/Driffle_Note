@@ -275,23 +275,22 @@ export function FeatureScrollSections() {
       </div>
 
       {/* Mobile: stacked with fade-in */}
-      <div className="lg:hidden flex flex-col px-6 sm:px-12 md:px-16 py-16 sm:py-20 relative w-full">
+      <div className="lg:hidden flex flex-col gap-16 px-5 sm:px-10 md:px-16 py-12 sm:py-16 md:py-20 relative w-full">
         {FEATURES.map((f, i) => (
           <div
             key={i}
             ref={(el) => {
               mobileRefs.current[i] = el;
             }}
-            className="py-10"
           >
-            <div className="flex flex-col gap-6 sm:gap-8 items-start">
-              <div className="flex flex-col font-title italic justify-center leading-[0] text-[#da4c1e] text-lg sm:text-xl md:text-[22px] w-full">
+            <div className="flex flex-col gap-5 sm:gap-7 items-start">
+              <div className="flex flex-col font-title italic justify-center leading-[0] text-[#da4c1e] text-base sm:text-lg md:text-[22px] w-full">
                 <p className="leading-[normal]">{f.eyebrow}</p>
               </div>
-              <div className="flex flex-col font-title justify-center leading-[0] not-italic text-[#0e0f0c] text-2xl sm:text-3xl md:text-4xl tracking-[-0.72px] w-full">
-                <p className="leading-tight">{f.title}</p>
+              <div className="flex flex-col font-title justify-center leading-[0] not-italic text-[#0e0f0c] text-[28px] sm:text-[34px] md:text-4xl tracking-[-0.5px] w-full">
+                <p className="leading-[1.15]">{f.title}</p>
               </div>
-              <div className="flex flex-col font-['Geist:Regular',sans-serif] justify-center leading-[0] not-italic text-[#72726e] text-base sm:text-lg md:text-xl w-full">
+              <div className="flex flex-col font-['Geist:Regular',sans-serif] justify-center leading-[0] not-italic text-[#72726e] text-[15px] sm:text-lg md:text-xl w-full">
                 <p className="leading-relaxed">{f.description}</p>
               </div>
               {f.bullets.map((bullet, j) => (
@@ -299,10 +298,10 @@ export function FeatureScrollSections() {
               ))}
             </div>
             <div
-              className="mt-8 h-[300px] sm:h-[400px] relative rounded-2xl w-full"
+              className="mt-8 h-[240px] sm:h-[340px] md:h-[400px] relative rounded-2xl w-full"
               style={{ backgroundColor: f.color }}
             >
-              <div className="content-stretch flex flex-col items-start justify-center overflow-clip p-6 sm:p-8 relative rounded-[inherit] size-full">
+              <div className="content-stretch flex flex-col items-start justify-center overflow-clip p-5 sm:p-7 relative rounded-[inherit] size-full">
                 <div className="bg-[#faf5f2] flex-[1_0_0] min-h-px min-w-px rounded-xl w-full" />
               </div>
               <div

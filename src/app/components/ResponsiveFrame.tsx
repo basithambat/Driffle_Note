@@ -108,7 +108,7 @@ function BackgroundImage3({ children, additionalClassNames = "", withNoiseOverla
         />
       )}
       <div className="flex flex-col items-center size-full">
-        <div className="content-stretch flex flex-col gap-16 md:gap-[104px] items-center px-6 sm:px-12 md:px-20 py-16 sm:py-20 md:py-[124px] relative w-full">
+        <div className="content-stretch flex flex-col gap-10 sm:gap-16 md:gap-[104px] items-center px-5 sm:px-10 md:px-20 py-10 sm:py-16 md:py-[124px] relative w-full">
           {withNoiseOverlay && <NoiseOverlay opacity={0.15} />}
           {children}
         </div>
@@ -382,7 +382,7 @@ export default function ResponsiveFrame() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="bg-white content-stretch flex flex-col gap-2 items-center p-4 relative size-full" ref={containerRef}>
+    <div className="bg-white content-stretch flex flex-col gap-1.5 sm:gap-2 items-center p-2 sm:p-4 relative size-full" ref={containerRef}>
       <NoiseOverlay opacity={0.06} blendMode="soft-light" />
       <NavBar />
       {/* Hero Section */}
@@ -393,7 +393,7 @@ export default function ResponsiveFrame() {
           <HeroInteractiveImage alt="" src="/assets/hero-placeholder.png" />
           
           {/* Hero Content */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-24 sm:top-32 md:top-44 content-stretch flex flex-col gap-12 sm:gap-16 md:gap-[87px] items-center w-full max-w-[90%] sm:max-w-[80%] md:max-w-[653px] px-4">
+          <div className="absolute left-1/2 -translate-x-1/2 top-20 sm:top-32 md:top-44 content-stretch flex flex-col gap-10 sm:gap-16 md:gap-[87px] items-center w-full max-w-[92%] sm:max-w-[80%] md:max-w-[653px] px-4">
             <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-center leading-[0] not-italic relative shrink-0 text-center text-white w-full">
               <div className="flex flex-col font-title justify-center relative shrink-0 text-3xl sm:text-4xl md:text-5xl lg:text-[57.5px] w-full">
                 <p className="leading-tight sm:leading-[60px]">
@@ -428,11 +428,11 @@ export default function ResponsiveFrame() {
 
       {/* Three steps section */}
       <BackgroundImage3 additionalClassNames="bg-white">
-        <div className="relative shrink-0 w-full">
+        <div className="relative shrink-0 w-full relative shrink-0 w-full">
           <div className="flex flex-col items-center size-full">
             <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-center leading-[0] not-italic px-4 sm:px-8 md:px-16 relative text-center w-full">
-              <div className="flex flex-col font-title justify-center relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl md:text-4xl lg:text-[48px] tracking-[-0.72px]">
-                <p className="leading-tight lg:leading-[48px]">Three steps to better{"\u00A0"}meetings</p>
+              <div className="flex flex-col font-title justify-center relative shrink-0 text-[#0e0f0c] text-[32px] sm:text-4xl md:text-4xl lg:text-[48px] tracking-[-0.72px]">
+                <p className="leading-[1.15] lg:leading-[48px]">Three steps to better{"\u00A0"}meetings</p>
               </div>
               <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center relative shrink-0 text-[#72726e] text-base sm:text-lg md:text-xl lg:text-[22.3px]">
                 <p className="leading-relaxed lg:leading-8">Driffle fits into how you already work — no new habits, no clunky setup, no meeting{"\u00A0"}bots.</p>
@@ -443,7 +443,7 @@ export default function ResponsiveFrame() {
         <div className="relative shrink-0 w-full">
           <div className="flex flex-row justify-center size-full">
             <div className="content-stretch flex flex-col md:flex-row gap-6 sm:gap-8 items-start md:items-stretch justify-center px-4 sm:px-8 md:px-12 relative w-full">
-              <div className="bg-[#faf5f2] relative rounded-2xl self-stretch shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
+              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[1] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none rounded-2xl self-stretch shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
                 <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
                 <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 relative size-full">
                   <div className="relative shrink-0 size-16 sm:size-20">
@@ -462,12 +462,12 @@ export default function ResponsiveFrame() {
                   <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl tracking-[-0.3px] w-full">
                     <p className="leading-7">Join your meeting</p>
                   </div>
-                  <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-lg sm:text-xl lg:text-[22.3px] text-[#72726e] w-full">
+                  <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-base sm:text-lg lg:text-[22.3px] text-[#72726e] w-full">
                     <p className="leading-relaxed lg:leading-8">{`Open Driffle before your call. It listens to your computer's audio directly — no bot joins the call, no one gets notified.`}</p>
                   </div>
                 </div>
               </div>
-              <div className="bg-[#faf5f2] content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 relative rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
+              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[2] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
                 <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
                 <div className="relative shrink-0 size-16 sm:size-20">
                   <BackgroundImage />
@@ -487,11 +487,11 @@ export default function ResponsiveFrame() {
                 <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl tracking-[-0.3px] w-full">
                   <p className="leading-7">Jot your key thoughts</p>
                 </div>
-                <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-lg sm:text-xl lg:text-[22.3px] text-[#72726e] w-full">
+                <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-base sm:text-lg lg:text-[22.3px] text-[#72726e] w-full">
                   <p className="leading-relaxed lg:leading-8">{`Type quick bullets as you talk. Don't worry about being thorough — Driffle has the full transcript to fill in the gaps.`}</p>
                 </div>
               </div>
-              <div className="bg-[#faf5f2] content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 relative rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
+              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[3] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
                 <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
                 <div className="relative shrink-0 size-16 sm:size-20">
                   <BackgroundImage />
@@ -509,7 +509,7 @@ export default function ResponsiveFrame() {
                 <div className="flex flex-col font-title justify-center leading-[0] not-italic relative shrink-0 text-[#0e0f0c] text-2xl sm:text-3xl tracking-[-0.3px] w-full">
                   <p className="leading-7">Get polished notes instantly</p>
                 </div>
-                <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-lg sm:text-xl lg:text-[22.3px] text-[#72726e] w-full">
+                <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-base sm:text-lg lg:text-[22.3px] text-[#72726e] w-full">
                   <p className="leading-relaxed lg:leading-8">When the call ends, Driffle combines your notes with the transcript and delivers structured, ready-to-share meeting records.</p>
                 </div>
               </div>
@@ -529,7 +529,7 @@ export default function ResponsiveFrame() {
               <div className="flex flex-col font-title italic justify-center relative shrink-0 text-[#da4c1e] text-lg sm:text-xl md:text-[22px] text-center">
                 <p className="leading-[normal]">Simple, honest pricing</p>
               </div>
-              <div className="flex flex-col font-title justify-center not-italic relative shrink-0 text-2xl sm:text-3xl md:text-4xl lg:text-[48px] text-center text-white tracking-[-0.72px]">
+              <div className="flex flex-col font-title justify-center not-italic relative shrink-0 text-[32px] sm:text-4xl md:text-4xl lg:text-[48px] text-center text-white tracking-[-0.72px]">
                 <p>
                   <span className="leading-tight lg:leading-[48px] text-[#ff9d00]">Start free</span>
                   <span className="leading-tight lg:leading-[48px]">{`, upgrade when you're hooked`}</span>

@@ -141,7 +141,7 @@ export function ScrollTransitionSection() {
     <section
       ref={sectionRef}
       aria-label="Notes to AI enhanced transition"
-      className="bg-white content-stretch flex flex-col gap-6 sm:gap-8 items-center justify-center py-16 sm:py-20 md:py-[124px] relative rounded-2xl shrink-0 w-full"
+      className="bg-white content-stretch flex flex-col gap-5 sm:gap-8 items-center justify-center px-3 sm:px-6 py-10 sm:py-16 md:py-[124px] relative rounded-2xl shrink-0 w-full"
     >
       <div
         aria-hidden="true"
@@ -230,8 +230,8 @@ export function ScrollTransitionSection() {
           </div>
 
           {/* Content area */}
-          <div className="bg-white min-h-[300px] sm:h-[428px] relative shrink-0 w-full overflow-hidden rounded-b-[15px]">
-            <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-start px-6 sm:px-8 py-4 relative size-full">
+          <div className="bg-white min-h-[260px] sm:min-h-[300px] md:h-[428px] relative shrink-0 w-full overflow-hidden rounded-b-[15px] flex flex-col">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-start px-6 sm:px-8 py-4 relative flex-1 w-full">
               {/* Title with roll transition */}
               <div className="relative h-7 overflow-hidden w-full mb-4">
                 <div

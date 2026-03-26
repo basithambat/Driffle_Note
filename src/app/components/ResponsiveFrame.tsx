@@ -281,6 +281,7 @@ function SvgBackgroundImage() {
 function NavBar() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const lastY = useRef(0);
 
   useEffect(() => {
@@ -296,22 +297,24 @@ function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const barColor = scrolled || menuOpen;
+
   return (
     <nav
       className={clsx(
-        "fixed top-4 sm:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300",
-        hidden && "-translate-y-[calc(100%+3rem)]"
+        "fixed top-5 sm:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300",
+        hidden && "sm:-translate-y-[calc(100%+3rem)]"
       )}
     >
       <div className={clsx(
-        "backdrop-blur-xl flex flex-row gap-4 sm:gap-8 md:gap-[61px] items-center justify-center px-4 sm:px-6 md:px-[25px] py-2 rounded-full relative transition-[background-color,box-shadow] duration-300",
-        scrolled
-          ? "bg-white/80 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
+        "backdrop-blur-xl flex flex-row gap-3 sm:gap-8 md:gap-[61px] items-center justify-center px-4 sm:px-6 md:px-[25px] py-2 rounded-full relative transition-[background-color,box-shadow] duration-300",
+        barColor
+          ? "bg-white/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
           : "bg-[rgba(0,0,0,0.1)]"
       )}>
         <div aria-hidden="true" className={clsx(
           "absolute border border-solid inset-0 pointer-events-none rounded-full transition-colors duration-300",
-          scrolled ? "border-[#d5d5d2]" : "border-white/30"
+          barColor ? "border-[#d5d5d2]" : "border-white/30"
         )} />
 
         {/* Logo */}
@@ -331,16 +334,16 @@ function NavBar() {
           </div>
           <div className={clsx(
             "flex flex-col font-title font-medium justify-center leading-[0] not-italic relative shrink-0 text-xl sm:text-2xl md:text-[25px] whitespace-nowrap transition-colors duration-300",
-            scrolled ? "text-[#0e0f0c]" : "text-white"
+            barColor ? "text-[#0e0f0c]" : "text-white"
           )}>
             <p className="leading-[normal]">Driffle</p>
           </div>
         </div>
 
-        {/* Nav Links */}
+        {/* Nav Links — desktop only */}
         <div className={clsx(
           "hidden sm:flex font-['Geist:Medium',sans-serif] gap-4 md:gap-[26px] items-center leading-[0] not-italic relative shrink-0 text-sm md:text-[15.1px] whitespace-nowrap transition-colors duration-300",
-          scrolled ? "text-[#0e0f0c]" : "text-white"
+          barColor ? "text-[#0e0f0c]" : "text-white"
         )}>
           <div className="flex flex-col justify-center relative shrink-0 cursor-pointer hover:opacity-60 transition-opacity">
             <p className="leading-6">Features</p>
@@ -356,22 +359,63 @@ function NavBar() {
         {/* Download Button */}
         <div className={clsx(
           "content-stretch flex items-center px-3 sm:px-[13px] py-1.5 sm:py-[7px] relative rounded-full shrink-0 cursor-pointer transition-colors duration-200",
-          scrolled ? "hover:bg-black/5" : "hover:bg-white/10"
+          barColor ? "hover:bg-black/5" : "hover:bg-white/10"
         )} data-name="Link">
           <div aria-hidden="true" className={clsx(
             "absolute border border-solid inset-0 pointer-events-none rounded-full transition-colors duration-300",
-            scrolled ? "border-[#d5d5d2]" : "border-[rgba(255,255,255,0.2)]"
+            barColor ? "border-[#d5d5d2]" : "border-[rgba(255,255,255,0.2)]"
           )} />
           <div className="relative shrink-0" data-name="Container">
             <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center relative">
               <div className={clsx(
                 "flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-sm sm:text-[15.3px] whitespace-nowrap transition-colors duration-300",
-                scrolled ? "text-[#0e0f0c]" : "text-white"
+                barColor ? "text-[#0e0f0c]" : "text-white"
               )}>
                 <p className="leading-6">Download</p>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Hamburger — mobile only */}
+        <button
+          className="sm:hidden relative size-5 cursor-pointer shrink-0"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={clsx(
+            "absolute left-0 w-full h-[1.5px] rounded-full transition-all duration-300",
+            barColor ? "bg-[#0e0f0c]" : "bg-white",
+            menuOpen ? "top-[9px] rotate-45" : "top-[3px]"
+          )} />
+          <span className={clsx(
+            "absolute left-0 w-full h-[1.5px] rounded-full transition-all duration-300",
+            barColor ? "bg-[#0e0f0c]" : "bg-white",
+            menuOpen ? "opacity-0" : "top-[9px]"
+          )} />
+          <span className={clsx(
+            "absolute left-0 w-full h-[1.5px] rounded-full transition-all duration-300",
+            barColor ? "bg-[#0e0f0c]" : "bg-white",
+            menuOpen ? "top-[9px] -rotate-45" : "top-[15px]"
+          )} />
+        </button>
+      </div>
+
+      {/* Mobile menu dropdown */}
+      <div className={clsx(
+        "sm:hidden overflow-hidden transition-all duration-300 ease-out",
+        menuOpen ? "max-h-60 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
+      )}>
+        <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-[#d5d5d2] shadow-[0_4px_24px_rgba(0,0,0,0.08)] px-5 py-4 flex flex-col gap-1">
+          {["Features", "Pricing", "Blog"].map((label) => (
+            <div
+              key={label}
+              className="font-['Geist:Medium',sans-serif] text-[#0e0f0c] text-[15px] py-2.5 cursor-pointer hover:text-[#da4c1e] transition-colors"
+              onClick={() => setMenuOpen(false)}
+            >
+              {label}
+            </div>
+          ))}
         </div>
       </div>
     </nav>
@@ -393,7 +437,7 @@ export default function ResponsiveFrame() {
           <HeroInteractiveImage alt="" src="/assets/hero-placeholder.png" />
           
           {/* Hero Content */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-20 sm:top-32 md:top-44 content-stretch flex flex-col gap-10 sm:gap-16 md:gap-[87px] items-center w-full max-w-[92%] sm:max-w-[80%] md:max-w-[653px] px-4">
+          <div className="absolute left-1/2 -translate-x-1/2 top-[88px] sm:top-32 md:top-44 content-stretch flex flex-col gap-10 sm:gap-16 md:gap-[87px] items-center w-full max-w-[92%] sm:max-w-[80%] md:max-w-[653px] px-4">
             <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-center leading-[0] not-italic relative shrink-0 text-center text-white w-full">
               <div className="flex flex-col font-title justify-center relative shrink-0 text-3xl sm:text-4xl md:text-5xl lg:text-[57.5px] w-full">
                 <p className="leading-tight sm:leading-[60px]">
@@ -529,10 +573,10 @@ export default function ResponsiveFrame() {
               <div className="flex flex-col font-title italic justify-center relative shrink-0 text-[#da4c1e] text-lg sm:text-xl md:text-[22px] text-center">
                 <p className="leading-[normal]">Simple, honest pricing</p>
               </div>
-              <div className="flex flex-col font-title justify-center not-italic relative shrink-0 text-[32px] sm:text-4xl md:text-4xl lg:text-[48px] text-center text-white tracking-[-0.72px]">
+              <div className="flex flex-col font-title justify-center not-italic relative shrink-0 text-[32px] sm:text-4xl md:text-4xl lg:text-[48px] text-center text-white tracking-[-0.72px] text-balance">
                 <p>
                   <span className="leading-tight lg:leading-[48px] text-[#ff9d00]">Start free</span>
-                  <span className="leading-tight lg:leading-[48px]">{`, upgrade when you're hooked`}</span>
+                  <span className="leading-tight lg:leading-[48px]">{`, upgrade when you\u2019re\u00A0hooked`}</span>
                 </p>
               </div>
               <div className="flex flex-col font-['Geist:Light',sans-serif] justify-center not-italic relative shrink-0 text-base sm:text-lg md:text-xl lg:text-[22.3px] text-center text-white w-full">

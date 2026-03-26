@@ -75,7 +75,7 @@ export function ScrollTransitionSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
+          start: "top 56px",
           end: "+=1200",
           scrub: 0.6,
           pin: true,

@@ -3,10 +3,14 @@
 import clsx from "clsx";
 import svgPaths from "../../imports/svg-st5x77eynv";
 import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HeroInteractiveImage } from "./HeroInteractiveImage";
 import { NoiseOverlay } from "./NoiseOverlay";
 import { ScrollTransitionSection } from "./ScrollTransitionSection";
 import { FeatureScrollSections } from "./FeatureScrollSections";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function ListBackgroundImage({ children }: React.PropsWithChildren<{}>) {
   return (
@@ -424,6 +428,34 @@ function NavBar() {
 
 export default function ResponsiveFrame() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stepsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!stepsRef.current) return;
+    const cards = stepsRef.current.querySelectorAll(".step-card");
+    if (!cards.length) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        cards,
+        { opacity: 0, y: 72, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: stepsRef.current,
+            start: "top 80%",
+          },
+        },
+      );
+    }, stepsRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <div className="bg-white content-stretch flex flex-col gap-1.5 sm:gap-2 items-center p-2 sm:p-4 relative size-full" ref={containerRef}>
@@ -472,7 +504,7 @@ export default function ResponsiveFrame() {
 
       {/* Three steps section */}
       <BackgroundImage3 additionalClassNames="bg-white">
-        <div className="relative shrink-0 w-full relative shrink-0 w-full">
+        <div className="relative shrink-0 w-full">
           <div className="flex flex-col items-center size-full">
             <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-center leading-[0] not-italic px-4 sm:px-8 md:px-16 relative text-center w-full">
               <div className="flex flex-col font-title justify-center relative shrink-0 text-[#0e0f0c] text-[32px] sm:text-4xl md:text-4xl lg:text-[48px] tracking-[-0.72px]">
@@ -484,11 +516,11 @@ export default function ResponsiveFrame() {
             </div>
           </div>
         </div>
-        <div className="relative shrink-0 w-full">
+        <div ref={stepsRef} className="relative shrink-0 w-full">
           <div className="flex flex-row justify-center size-full">
             <div className="content-stretch flex flex-col md:flex-row gap-6 sm:gap-8 items-start md:items-stretch justify-center px-4 sm:px-8 md:px-12 relative w-full">
-              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[1] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none rounded-2xl self-stretch shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
-                <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+              <div className="step-card bg-[#faf5f2] border border-[#d5d5d2] sticky md:relative top-16 md:top-auto z-[1] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none rounded-2xl self-stretch shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px] overflow-hidden">
+                <span className="absolute top-4 right-5 font-title text-[#c0a492] text-[64px] sm:text-[72px] leading-none select-none pointer-events-none opacity-40">01</span>
                 <div className="content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 relative size-full">
                   <div className="relative shrink-0 size-16 sm:size-20">
                     <BackgroundImage />
@@ -496,8 +528,8 @@ export default function ResponsiveFrame() {
                       <div className="absolute inset-[8.33%_16.73%]" data-name="vector">
                         <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 23.9574 30">
                           <g id="vector">
-                            <path d={svgPaths.p4b83200} fill="var(--fill-0, white)" />
-                            <path d={svgPaths.p27d92c80} fill="var(--fill-0, white)" />
+                            <path d={svgPaths.p4b83200} fill="var(--fill-0, #3a3a38)" />
+                            <path d={svgPaths.p27d92c80} fill="var(--fill-0, #3a3a38)" />
                           </g>
                         </svg>
                       </div>
@@ -511,18 +543,18 @@ export default function ResponsiveFrame() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[2] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
-                <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+              <div className="step-card bg-[#faf5f2] border border-[#d5d5d2] sticky md:relative top-16 md:top-auto z-[2] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px] overflow-hidden relative">
+                <span className="absolute top-4 right-5 font-title text-[#c0a492] text-[64px] sm:text-[72px] leading-none select-none pointer-events-none opacity-40">02</span>
                 <div className="relative shrink-0 size-16 sm:size-20">
                   <BackgroundImage />
                   <div className="absolute left-5 sm:left-6 overflow-clip size-8 sm:size-9 top-5 sm:top-[22.05px]" data-name="write, edit-list, list">
                     <div className="absolute inset-[12.5%_11.78%_8.33%_12.5%]" data-name="vector">
                       <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 27.2603 28.4999">
                         <g id="vector">
-                          <path d={svgPaths.p2c595b00} fill="var(--fill-0, white)" />
-                          <path d={svgPaths.pb27e900} fill="var(--fill-0, white)" />
-                          <path d={svgPaths.p10558a00} fill="var(--fill-0, white)" />
-                          <path d={svgPaths.p1f68f940} fill="var(--fill-0, white)" />
+                          <path d={svgPaths.p2c595b00} fill="var(--fill-0, #3a3a38)" />
+                          <path d={svgPaths.pb27e900} fill="var(--fill-0, #3a3a38)" />
+                          <path d={svgPaths.p10558a00} fill="var(--fill-0, #3a3a38)" />
+                          <path d={svgPaths.p1f68f940} fill="var(--fill-0, #3a3a38)" />
                         </g>
                       </svg>
                     </div>
@@ -535,16 +567,16 @@ export default function ResponsiveFrame() {
                   <p className="leading-relaxed lg:leading-8">{`Type quick bullets as you talk. Don't worry about being thorough — Driffle has the full transcript to fill in the gaps.`}</p>
                 </div>
               </div>
-              <div className="bg-[#faf5f2] sticky md:relative top-16 md:top-auto z-[3] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px]">
-                <div aria-hidden="true" className="absolute border border-[#d5d5d2] border-solid inset-0 pointer-events-none rounded-2xl" />
+              <div className="step-card bg-[#faf5f2] border border-[#d5d5d2] sticky md:relative top-16 md:top-auto z-[3] md:z-auto shadow-[0_-4px_20px_rgba(0,0,0,0.06)] md:shadow-none content-stretch flex flex-col gap-6 sm:gap-8 items-start p-6 rounded-2xl shrink-0 w-full md:w-auto md:flex-1 md:max-w-[296px] overflow-hidden relative">
+                <span className="absolute top-4 right-5 font-title text-[#c0a492] text-[64px] sm:text-[72px] leading-none select-none pointer-events-none opacity-40">03</span>
                 <div className="relative shrink-0 size-16 sm:size-20">
                   <BackgroundImage />
                   <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 overflow-clip size-8 sm:size-9 top-1/2" data-name="sparkles-soft">
                     <div className="absolute inset-[8.33%]" data-name="vector">
                       <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 30 30">
                         <g id="vector">
-                          <path d={svgPaths.p3589600} fill="var(--fill-0, white)" />
-                          <path d={svgPaths.pef17000} fill="var(--fill-0, white)" />
+                          <path d={svgPaths.p3589600} fill="var(--fill-0, #3a3a38)" />
+                          <path d={svgPaths.pef17000} fill="var(--fill-0, #3a3a38)" />
                         </g>
                       </svg>
                     </div>
